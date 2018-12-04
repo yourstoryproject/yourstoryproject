@@ -25,11 +25,18 @@ class BaseModel(db.Model):
             for column, value in self._to_dict().items()
         }
 
+tags = db.Table('tags',
+    db.Column('tag_id', db.Integer, db.ForeignKey('tag.id'), primary_key=True),
+    db.Column('entry_id', db.Integer, db.ForeignKey('entry.id'), primary_key=True)
+)
+
 class Account(db.Model):
     id              = db.Column(db.Integer, primary_key=True, nullable=False)
     created_on      = db.Column(db.Date, unique=False, nullable=False)
     last_login      = db.Column(db.Date, unique=False, nullable=True)
-    user_name       = db.Column(db.String(48), unique=True, nullable=False)
+    username        = db.Column(db.String(48), index=True, unique=True, nullable=False)
+    password_hash   = db.Column(db.String(128))
+    email           = db.Column(db.String(120), index=True, unique=True)
 
 class Entry(db.Model):
     id              = db.Column(db.Integer, primary_key=True, nullable=False)
@@ -45,8 +52,3 @@ class Tag(db.Model):
     created_on      = db.Column(db.Date, unique=False, nullable=False)
     modified_on     = db.Column(db.Date, unique=False, nullable=False)
     name            = db.Column(db.String(24), unique=True, nullable=False)
-
-tags = db.Table('tags',
-    db.Column('tag_id', db.Integer, db.ForeignKey('tag.id'), primary_key=True),
-    db.Column('entry_id', db.Integer, db.ForeignKey('entry.id'), primary_key=True)
-)
