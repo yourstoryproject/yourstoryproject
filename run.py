@@ -1,4 +1,4 @@
 from app import app
-from models import db
+from app import db
 
 db.init_app(app)
