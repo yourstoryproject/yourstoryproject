@@ -1,6 +1,9 @@
 from app import app
 from flask import json, render_template, Response
-from app.models import Entry, Tag
+from app.models.Account import Account
+from app.models.Entry import Entry
+from app.models.Tag import Tag
+
 
 def server_response(res, status_code):
     """
