@@ -80,5 +80,13 @@ class Tag(db.Model):
     def get_tag(id):
         return Tag.query.get(id)
 
+    def to_json(self):
+        return {
+            'id': self.id,
+            'created_on': self.created_on,
+            'modified_on': self.modified_on,
+            'name': self.name
+        }
+
     def __repr__(self):
         return '<Tag {}>'.format(self.name)
