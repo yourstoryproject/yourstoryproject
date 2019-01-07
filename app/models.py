@@ -1,6 +1,6 @@
 from app import db
-import datetime
 from werkzeug import check_password_hash, generate_password_hash
+import datetime
 
 
 tags = db.Table('tags',
@@ -64,10 +64,21 @@ class Tag(db.Model):
     modified_on     = db.Column(db.Date, unique=False, nullable=True)
     name            = db.Column(db.String(48), unique=True, nullable=False)
 
-    def __repr__(self):
-        return '<Tag {}>'.format(self.name)
-
     def __init__(self, modified_on, name):
+        """
+        Class constructor
+        """
         self.created_on = datetime.datetime.utcnow()
         self.modified_on = modified_on
         self.name = name.lower()
+
+    @staticmethod
+    def get_tags():
+        return Tag.query.all()
+
+    @staticmethod
+    def get_tag(id):
+        return Tag.query.get(id)
+
+    def __repr__(self):
+        return '<Tag {}>'.format(self.name)
