@@ -1,6 +1,7 @@
 from app import db
+from app.models import tags
 import datetime
-from . import tags
+
 
 class Entry(db.Model):
     __tablename__   = 'entry'
