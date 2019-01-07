@@ -1,4 +1,6 @@
 from app import db
+import datetime
+from werkzeug import check_password_hash, generate_password_hash
 
 
 tags = db.Table('tags',
@@ -19,6 +21,19 @@ class Account(db.Model):
     def __repr__(self):
         return '<Account {}>'.format(self.username)
 
+    def __init__(self, created_on, email, last_login, password, username):
+        self.created_on = created_on
+        self.email  = email.lower()
+        self.last_login  = last_login
+        self.set_password(password)
+        self.username = username
+
+    def set_password(self, password):
+        self.password_hash   = generate_password_hash(password)
+
+    def check_password(self, password):
+        return check_password_hash(self.password_hash, password)
+
 class Entry(db.Model):
     __tablename__   = 'entry'
 
@@ -33,6 +48,14 @@ class Entry(db.Model):
     def __repr__(self):
         return '<Entry {}>'.format(self.title)
 
+    def __init__(self, account_id, content, created_on, modified_on, tags, title):
+        self.account_id = account_id
+        self.content = content
+        self.created_on = created_on
+        self.modified_on = modified_on
+        self.tags = tags
+        self.title = title
+
 class Tag(db.Model):
     __tablename__   = 'tag'
 
@@ -43,3 +66,8 @@ class Tag(db.Model):
 
     def __repr__(self):
         return '<Tag {}>'.format(self.name)
+
+    def __init__(self, created_on, modified_on, name):
+        self.created_on = created_on
+        self.modified_on = modified_on
+        self.name = name.lower()
