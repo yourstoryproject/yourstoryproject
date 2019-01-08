@@ -12,10 +12,10 @@ class Account(db.Model):
     password_hash   = db.Column(db.String(128))
     username        = db.Column(db.String(48), index=True, unique=True, nullable=False)
 
-    def __repr__(self):
-        return '<Account {}>'.format(self.username)
-
     def __init__(self, email, last_login, password, username):
+        """
+        Class constructor
+        """
         self.created_on = datetime.datetime.utcnow()
         self.email  = email.lower()
         self.last_login  = last_login
@@ -27,3 +27,23 @@ class Account(db.Model):
 
     def check_password(self, password):
         return check_password_hash(self.password_hash, password)
+
+    @staticmethod
+    def get_accounts():
+        return Account.query.all()
+
+    @staticmethod
+    def get_account(id):
+        return Account.query.get(id)
+
+    def to_json(self):
+        return {
+            'id': self.id,
+            'created_on': self.created_on,
+            'email': self.email,
+            'last_login': self.last_login,
+            'username': self.username
+        }
+
+    def __repr__(self):
+        return '<Account {}>'.format(self.username)
