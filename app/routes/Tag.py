@@ -24,3 +24,17 @@ def tag(tagId):
     response = {'tag': tag.to_json()}
 
     return server_response(response, 200)
+
+@blueprint.route('/create/<string:tagName>', methods=['POST'])
+def add_tag(tagName):
+    if not tagName:
+        return server_response({'error': 'Missing parameter(s)'}, 400)
+
+    newTag = Tag.create_tag(tagName)
+
+    if not newTag == 'Success!':
+        response = {'error': newTag}
+
+        return server_response({'error': response}, 400)
+    else:
+        return server_response({'success': 'Successfully created new tag'}, 201)
