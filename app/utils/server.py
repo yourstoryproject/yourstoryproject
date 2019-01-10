@@ -1,7 +1,7 @@
 from flask import json, Response
 
 
-def server_response(res, status_code):
+def parse_response(res, status_code):
     """
     Custom Response Function
     """

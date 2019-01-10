@@ -1,40 +1,25 @@
-from app.utils.server import server_response
+from app.utils.server import parse_response
 from app.models.Tag import Tag
-from flask import Blueprint
+from app.api.Tag import create_tag, get_tag, get_tags
+from flask import Blueprint, jsonify
 
 
 blueprint = Blueprint('tags', __name__, url_prefix='/api/v1/tags')
 
 @blueprint.route('/', methods=['GET'])
 def tags():
-    tags = Tag.get_tags()
+    response = get_tags()
 
-    response = {'tags': [tag.to_json() for tag in tags]}
-
-    return server_response(response, 200)
-
+    return parse_response(response, response["status_code"])
 
 @blueprint.route('/<int:tagId>', methods=['GET'])
 def tag(tagId):
-    tag = Tag.get_tag(tagId)
+    response = get_tag(tagId)
 
-    if not tag:
-        return server_response({'error': 'Tag not found'}, 404)
-
-    response = {'tag': tag.to_json()}
-
-    return server_response(response, 200)
+    return parse_response(response, response["status_code"])
 
 @blueprint.route('/create/<string:tagName>', methods=['POST'])
 def add_tag(tagName):
-    if not tagName:
-        return server_response({'error': 'Missing parameter(s)'}, 400)
+    response = create_tag(tagName)
 
-    newTag = Tag.create_tag(tagName)
-
-    if not newTag == 'Success!':
-        response = {'error': newTag}
-
-        return server_response({'error': response}, 400)
-    else:
-        return server_response({'success': 'Successfully created new tag'}, 201)
+    return parse_response(response, response["status_code"])

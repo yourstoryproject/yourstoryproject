@@ -18,26 +18,6 @@ class Tag(db.Model):
         self.modified_on = datetime.datetime.utcnow()
         self.name = name.lower()
 
-    @staticmethod
-    def get_tags():
-        return Tag.query.all()
-
-    @staticmethod
-    def get_tag(id):
-        return Tag.query.get(id)
-
-    @staticmethod
-    def create_tag(name):
-        if not Tag.query.filter_by(name=name).first():
-            newTag = Tag(name=name)
-
-            db.session.add(newTag)
-            db.session.commit()
-
-            return 'Success!'
-        else:
-            return 'Tag already exists'
-
     def to_json(self):
         return {
             'id': self.id,
