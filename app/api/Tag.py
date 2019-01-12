@@ -1,6 +1,5 @@
 from app import db
 from app.models.Tag import Tag
-from flask import jsonify
 
 
 def create_tag(name):
