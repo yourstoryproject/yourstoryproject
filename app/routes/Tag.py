@@ -1,5 +1,5 @@
 from app.utils.server import parse_response
-from app.models.Tag import Tag
+from app.models import Tag
 from app.api.Tag import create_tag, get_tag, get_tags
 from flask import Blueprint, jsonify
 
