@@ -8,19 +8,17 @@ class Account(db.Model):
     id              = db.Column(db.Integer, primary_key=True, nullable=False)
     created_on      = db.Column(db.DateTime, default=datetime.datetime.utcnow, unique=False, nullable=False)
     email           = db.Column(db.String(120), index=True, unique=True, nullable=False)
-    last_login      = db.Column(db.Date, unique=False, nullable=True)
+    last_login      = db.Column(db.Date, default=datetime.datetime.utcnow, unique=False, nullable=True)
     password_hash   = db.Column(db.String(128))
-    username        = db.Column(db.String(48), index=True, unique=True, nullable=False)
 
-    def __init__(self, email, last_login, password, username):
+    def __init__(self, email, password):
         """
         Class constructor
         """
         self.created_on = datetime.datetime.utcnow()
         self.email  = email.lower()
-        self.last_login  = last_login
+        self.last_login  = datetime.datetime.utcnow()
         self.set_password(password)
-        self.username = username
 
     def set_password(self, password):
         self.password_hash   = generate_password_hash(password)
@@ -41,9 +39,8 @@ class Account(db.Model):
             'id': self.id,
             'created_on': self.created_on,
             'email': self.email,
-            'last_login': self.last_login,
-            'username': self.username
+            'last_login': self.last_login
         }
 
     def __repr__(self):
-        return '<Account {}>'.format(self.username)
+        return '<Account {}>'.format(self.id)
