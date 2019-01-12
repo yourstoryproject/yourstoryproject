@@ -26,14 +26,6 @@ class Account(db.Model):
     def check_password(self, password):
         return check_password_hash(self.password_hash, password)
 
-    @staticmethod
-    def get_accounts():
-        return Account.query.all()
-
-    @staticmethod
-    def get_account(id):
-        return Account.query.get(id)
-
     def to_json(self):
         return {
             'id': self.id,
