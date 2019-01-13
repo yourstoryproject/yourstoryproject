@@ -1,8 +1,6 @@
 from app import db
 from app.models.Entry import Entry
 
-import datetime
-
 
 def get_entry(id):
     entry = Entry.query.get(id)
