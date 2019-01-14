@@ -3,12 +3,12 @@ from app.models import Entry
 from app.api.Entry import get_entry, get_entries
 from flask import Blueprint, jsonify, render_template, request
 
+
 blueprint = Blueprint('entries', __name__, url_prefix='/api/v1/entries')
 
 @blueprint.route('/', methods=['GET'])
 def index():
     return render_template('api.html')
-
 
 @blueprint.route('/get_entries/', methods=['GET'])
 def getAllEntries():

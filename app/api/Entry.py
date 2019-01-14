@@ -5,6 +5,7 @@ from app.models.Entry import Entry
 def get_entry(entryId):
     if entryId == '':
         response = {"error": "Please provide an entry Id", "status_code": 400}
+
         return response
 
     entry = Entry.query.get(entryId)
