@@ -10,3 +10,7 @@ app.register_blueprint(Tag.blueprint)
 @app.route('/')
 def index():
     return render_template('index.html', title='Home')
+
+@app.route('/api/v1/')
+def apiRoute():
+    return render_template('api.html', title='API Home')
