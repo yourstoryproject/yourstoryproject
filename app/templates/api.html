@@ -1,0 +1,46 @@
+{% extends "base.html" %}
+
+{% block content %}
+    <a href="/api/v1/">API Home</a>
+
+    <hr>
+
+    <div class="results">
+        {% if response %}
+            <h3>Status Code: {{ response['status_code'] }}</h3>
+
+            {% if response['error'] %}
+                <h4>Error: {{ response['error'] }}</h3>
+            {% endif %}
+
+            <table>
+                {% for entry in response['data'] %}
+                    <tr>
+                        {% for key, value in entry.items() %}
+                            <td style="padding: 8px;">{{ key }}: {{ value }}</td>
+                        {% endfor %}
+                    </tr>
+                {% endfor %}
+            </table>
+        {% endif %}
+    </div>
+
+    <div class="button-container">
+        <form action="/api/v1/entries/get_entries" method="GET" name="get_entries">
+            <input type="submit" value="Get All Entries">
+        </form>
+    </div>
+
+    <div class="button-container">
+        <form action="/api/v1/entries/get_entry/" method="GET" name="get_entry">
+            <input type="text" name="entryId">
+            <input type="submit" value="Get Entry">
+        </form>
+    </div>
+
+    <style>
+        .button-container {
+            margin-bottom: 16px;
+        }
+    </style>
+{% endblock %}
