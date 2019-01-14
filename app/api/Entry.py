@@ -2,13 +2,17 @@ from app import db
 from app.models.Entry import Entry
 
 
-def get_entry(id):
-    entry = Entry.query.get(id)
+def get_entry(entryId):
+    if entryId == '':
+        response = {"error": "Please provide an entry Id", "status_code": 400}
+        return response
+
+    entry = Entry.query.get(entryId)
 
     if not entry:
         response = {"error": "Entry not found", "status_code": 400}
     else:
-        response = {"data": entry.to_json(), "status_code": 200}
+        response = {"data": [entry.to_json()], "status_code": 200}
 
     return response
 
