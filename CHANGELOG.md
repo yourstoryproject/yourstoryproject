@@ -34,4 +34,4 @@ Each issue fixed should contain one bullet summarizing the work done.
 * [YSP-9](https://github.com/jwu910/yourstoryproject/issues/9) Add create tag route
 * [YSP-2](https://github.com/jwu910/yourstoryproject/issues/2) Add get entry route
 * [YSP-4](https://github.com/jwu910/yourstoryproject/issues/4) Add create account route
-* [YSP-20](https://github.com/jwu910/yourstoryproject/issues/20) Add API test page for Entries
+* [YSP-20](https://github.com/jwu910/yourstoryproject/issues/20) Add API test page for Entries and update APIs to be safer
