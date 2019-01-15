@@ -1,7 +1,7 @@
 from app.utils.server import parse_response
 from app.models import Entry
 from app.api.Entry import get_entry, get_entries
-from flask import Blueprint, jsonify, render_template, request
+from flask import Blueprint, render_template, request
 
 
 blueprint = Blueprint('entries', __name__, url_prefix='/api/v1/entries')
