@@ -34,13 +34,33 @@
     <div class="button-container">
         <form action="/api/v1/entries/get_entry/" method="GET" name="get_entry">
             <input type="text" name="entryId">
-            <input type="submit" value="Get Entry">
+            <input type="submit" value="Get Entry by Id">
         </form>
     </div>
+
+    <div class="button-container">
+        <form action="/api/v1/tags/get_tags" method="GET" name="get_tags">
+            <input type="submit" value="Get All Tags">
+        </form>
+    </div>
+
+    <div class="button-container">
+        <form action="/api/v1/tags/get_tag/" method="GET" name="get_tag">
+            <input type="text" name="tagId">
+            <input type="submit" value="Get Tag by Id">
+        </form>
+    </div>
+
+
 
     <style>
         .button-container {
             margin-bottom: 16px;
+        }
+
+        .results {
+            max-height: 40%;
+            overflow-y: scroll;
         }
     </style>
 {% endblock %}

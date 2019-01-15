@@ -1,22 +1,28 @@
 from app.utils.server import parse_response
 from app.models import Tag
 from app.api.Tag import create_tag, get_tag, get_tags
-from flask import Blueprint, jsonify
+from flask import Blueprint, jsonify, render_template, request
 
 
 blueprint = Blueprint('tags', __name__, url_prefix='/api/v1/tags')
 
 @blueprint.route('/', methods=['GET'])
-def tags():
+def index():
+    return render_template('api.html')
+
+@blueprint.route('/get_tags/')
+def getAllTags():
     response = get_tags()
 
-    return parse_response(response, response["status_code"])
+    return render_template('api.html', response=response)
 
-@blueprint.route('/<int:tagId>', methods=['GET'])
-def tag(tagId):
+@blueprint.route('/get_tag/', methods=['GET'])
+def getSingleTag():
+    tagId = request.args.get('tagId')
+
     response = get_tag(tagId)
 
-    return parse_response(response, response["status_code"])
+    return render_template('api.html', response=response)
 
 @blueprint.route('/create/<string:tagName>', methods=['POST'])
 def add_tag(tagName):
