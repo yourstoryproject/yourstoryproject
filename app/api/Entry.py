@@ -8,14 +8,19 @@ def get_entry(entryId):
 
         return response
 
-    entry = Entry.query.get(entryId)
+    try:
+        entry = Entry.query.get(entryId)
 
-    if not entry:
-        response = {"error": "Entry not found", "status_code": 400}
-    else:
-        response = {"data": [entry.to_json()], "status_code": 200}
+        if not entry:
+            response = {"error": "Entry not found", "status_code": 400}
+        else:
+            response = {"data": [entry.to_json()], "status_code": 200}
 
-    return response
+        return response
+    except:
+        response = {"error": "Unable to perform query, please check parameters and try again", "status_code": 500}
+
+        return response
 
 def get_entries():
     entries = Entry.query.all()

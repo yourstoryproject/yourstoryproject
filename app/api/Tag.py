@@ -15,15 +15,25 @@ def create_tag(name):
 
     return response
 
-def get_tag(id):
-    tag = Tag.query.get(id)
+def get_tag(tagId):
+    if tagId == '':
+        response = {"error": "Please provide an tag Id", "status_code": 400}
 
-    if not tag:
-        response = {"error": "Tag not found", "status_code": 400}
-    else:
-        response = {"data": tag.to_json(), "status_code": 200}
+        return response
 
-    return response
+    try:
+        tag = Tag.query.get(tagId)
+
+        if not tag:
+            response = {"error": "Tag not found", "status_code": 400}
+        else:
+            response = {"data": [tag.to_json()], "status_code": 200}
+
+        return response
+    except:
+        response = {"error": "Unable to perform query, please check parameters and try again", "status_code": 500}
+
+        return response
 
 def get_tags():
     tags = Tag.query.all()
