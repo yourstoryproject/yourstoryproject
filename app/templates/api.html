@@ -51,6 +51,18 @@
         </form>
     </div>
 
+    <div class="button-container">
+        <form action="/api/v1/accounts/get_accounts" method="GET" name="get_accounts">
+            <input type="submit" value="Get All Accounts">
+        </form>
+    </div>
+
+    <div class="button-container">
+        <form action="/api/v1/accounts/get_account/" method="GET" name="get_account">
+            <input type="text" name="accountId">
+            <input type="submit" value="Get Account by Id">
+        </form>
+    </div>
 
 
     <style>

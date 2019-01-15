@@ -15,15 +15,26 @@ def create_account(email, password):
 
     return response
 
-def get_account(id):
-    account = Account.query.get(id)
+def get_account(accountId):
+    if accountId == '':
+        response = {"error": "Please provide an account Id", "status_code": 400}
 
-    if not account:
-        response = {"error": "Account not found", "status_code": 400}
-    else:
-        response = {"data": account.to_json(), "status_code": 200}
+        return response
 
-    return response
+    try:
+        account = Account.query.get(accountId)
+
+        if not account:
+            response = {"error": "Account not found", "status_code": 400}
+        else:
+            response = {"data": [account.to_json()], "status_code": 200}
+
+        return response
+    except:
+        response = {"error": "Unable to perform query, please check parameters and try again", "status_code": 500}
+
+        return response
+
 
 def get_accounts():
     accounts = Account.query.all()
