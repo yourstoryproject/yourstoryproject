@@ -1,6 +1,6 @@
 from app.utils.server import parse_response
 from app.models import Tag
-from app.api.Tag import create_tag, get_tag, get_tags
+from app.api.Tag import create_tag, edit_tag, get_tag, get_tags
 from flask import Blueprint, render_template, request
 
 
@@ -29,5 +29,14 @@ def add_tag():
     tagName = request.args.get('tagName')
 
     response = create_tag(tagName)
+
+    return parse_response(response, response["status_code"])
+
+@blueprint.route('/edit/', methods=['PUT'])
+def editTag():
+    tagId = request.args.get('tagId')
+    tagName = request.args.get('tagName')
+
+    response = edit_tag(tagId=tagId, tagName=tagName)
 
     return parse_response(response, response["status_code"])
