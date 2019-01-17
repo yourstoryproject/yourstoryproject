@@ -6,15 +6,18 @@ from flask import Blueprint, render_template, request
 
 blueprint = Blueprint('entries', __name__, url_prefix='/api/v1/entries')
 
+
 @blueprint.route('/', methods=['GET'])
 def index():
     return render_template('api.html')
+
 
 @blueprint.route('/get_entries/', methods=['GET'])
 def getAllEntries():
     response = get_entries()
 
     return render_template('api.html', response=response)
+
 
 @blueprint.route('/get_entry/', methods=['GET'])
 def getSingleEntry():
