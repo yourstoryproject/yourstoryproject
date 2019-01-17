@@ -1,10 +1,10 @@
-from app import app
-from app import db
-from app.models import Account, Entry, Tag
+from pyapp import pyapp
+from pyapp import db
+from pyapp.models import Account, Entry, Tag
 
-db.init_app(app)
+db.init_app(pyapp)
 
 
-@app.shell_context_processor
+@pyapp.shell_context_processor
 def make_shell_context():
     return {'db': db, 'Account': Account, 'Entry': Entry, 'Tag': Tag}
