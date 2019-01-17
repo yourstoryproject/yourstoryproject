@@ -10,26 +10,26 @@ def create_tag(name):
         db.session.add(newTag)
         db.session.commit()
 
-        response = {"message": "Successfully created tag", "status_code": 201}
+        response = {"message": "Successfully created tag", "status": 201}
     else:
-        response = {"message": "Tag already exists", "status_code": 400}
+        response = {"message": "Tag already exists", "status": 400}
 
     return response
 
 
 def edit_tag(tagId, tagName):
     if tagId == '':
-        response = {"error": "Please provide an tag Id", "status_code": 400}
+        response = {"error": "Please provide an tag Id", "status": 400}
 
         return response
 
     if not Tag.query.filter_by(id=tagId).first():
-        response = {"error": "Tag does not exist", "status_code": 400}
+        response = {"error": "Tag does not exist", "status": 400}
 
         return response
 
     if tagName == '':
-        response = {"error": "Please provide new tag name", "status_code": 400}
+        response = {"error": "Please provide new tag name", "status": 400}
 
         return response
 
@@ -44,18 +44,18 @@ def edit_tag(tagId, tagName):
         db.session.commit()
 
         response = {"success": "Tag name was changed from " +
-                    oldTag + " to " + tagName, "status_code": 201}
+                    oldTag + " to " + tagName, "status": 201}
 
         return response
     except BaseException:
-        response = {"error": "Unable to change tag name.", "status_code": 500}
+        response = {"error": "Unable to change tag name.", "status": 500}
 
         return response
 
 
 def get_tag(tagId):
     if tagId == '':
-        response = {"error": "Please provide an tag Id", "status_code": 400}
+        response = {"error": "Please provide an tag Id", "status": 400}
 
         return response
 
@@ -63,15 +63,15 @@ def get_tag(tagId):
         tag = Tag.query.get(tagId)
 
         if not tag:
-            response = {"error": "Tag not found", "status_code": 400}
+            response = {"error": "Tag not found", "status": 400}
         else:
-            response = {"data": [tag.to_json()], "status_code": 200}
+            response = {"data": [tag.to_json()], "status": 200}
 
         return response
     except BaseException:
         response = {
             "error": "Unable to perform query, please check parameters and try again",
-            "status_code": 500}
+            "status": 500}
 
         return response
 
@@ -83,8 +83,8 @@ def get_tags():
         response = {
             "data": [
                 tag.to_json() for tag in tags],
-            "status_code": 200}
+            "status": 200}
     else:
-        response = {"error": "No tags found", "status_code": 400}
+        response = {"error": "No tags found", "status": 400}
 
     return response

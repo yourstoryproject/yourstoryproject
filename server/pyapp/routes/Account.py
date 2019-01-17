@@ -35,7 +35,7 @@ def add_account():
 
     response = create_account(email, password)
 
-    return parse_response(response, response["status_code"])
+    return parse_response(response, response["status"])
 
 
 @blueprint.route('/edit/', methods=['PUT'])
@@ -49,4 +49,4 @@ def editAccount():
         email=email,
         password=password)
 
-    return parse_response(response, response["status_code"])
+    return parse_response(response, response["status"])

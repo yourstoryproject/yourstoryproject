@@ -12,9 +12,9 @@ def create_account(email, password):
 
         response = {
             "message": "Successfully created account",
-            "status_code": 201}
+            "status": 201}
     else:
-        response = {"message": "Email already exists", "status_code": 400}
+        response = {"message": "Email already exists", "status": 400}
 
     return response
 
@@ -39,13 +39,13 @@ def edit_account(accountId, email, password):
             oldEmail +
             " to " +
             email,
-            "status_code": 200}
+            "status": 200}
 
         return response
     except BaseException:
         response = {
             "error": "Unable to update information",
-            "status_code": 500}
+            "status": 500}
 
         return response
 
@@ -64,15 +64,15 @@ def get_account(accountId):
         account = Account.query.get(accountId)
 
         if not account:
-            response = {"error": "Account not found", "status_code": 400}
+            response = {"error": "Account not found", "status": 400}
         else:
-            response = {"data": [account.to_json()], "status_code": 200}
+            response = {"data": [account.to_json()], "status": 200}
 
         return response
     except BaseException:
         response = {
             "error": "Unable to perform query, please check parameters and try again",
-            "status_code": 500}
+            "status": 500}
 
         return response
 
@@ -84,8 +84,8 @@ def get_accounts():
         response = {
             "data": [
                 account.to_json() for account in accounts],
-            "status_code": 200}
+            "status": 200}
     else:
-        response = {"error": "No accounts found", "status_code": 400}
+        response = {"error": "No accounts found", "status": 400}
 
     return response

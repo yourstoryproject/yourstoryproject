@@ -4,7 +4,7 @@ from pyapp.models.Entry import Entry
 
 def get_entry(entryId):
     if entryId == '':
-        response = {"error": "Please provide an entry Id", "status_code": 400}
+        response = {"error": "Please provide an entry Id", "status": 400}
 
         return response
 
@@ -12,15 +12,15 @@ def get_entry(entryId):
         entry = Entry.query.get(entryId)
 
         if not entry:
-            response = {"error": "Entry not found", "status_code": 400}
+            response = {"error": "Entry not found", "status": 400}
         else:
-            response = {"data": [entry.to_json()], "status_code": 200}
+            response = {"data": [entry.to_json()], "status": 200}
 
         return response
     except BaseException:
         response = {
             "error": "Unable to perform query, please check parameters and try again",
-            "status_code": 500}
+            "status": 500}
 
         return response
 
@@ -32,8 +32,8 @@ def get_entries():
         response = {
             "data": [
                 entry.to_json() for entry in entries],
-            "status_code": 200}
+            "status": 200}
     else:
-        response = {"error": "No entries found", "status_code": 400}
+        response = {"error": "No entries found", "status": 400}
 
     return response

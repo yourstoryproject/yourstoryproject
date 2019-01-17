@@ -34,7 +34,7 @@ def add_tag():
 
     response = create_tag(tagName)
 
-    return parse_response(response, response["status_code"])
+    return parse_response(response, response["status"])
 
 
 @blueprint.route('/edit/', methods=['PUT'])
@@ -44,4 +44,4 @@ def editTag():
 
     response = edit_tag(tagId=tagId, tagName=tagName)
 
-    return parse_response(response, response["status_code"])
+    return parse_response(response, response["status"])

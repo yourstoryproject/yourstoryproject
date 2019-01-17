@@ -7,7 +7,7 @@
 
     <div class="results">
         {% if response %}
-            <h3>Status Code: {{ response['status_code'] }}</h3>
+            <h3>Status Code: {{ response['status'] }}</h3>
 
             {% if response['error'] %}
                 <h4>Error: {{ response['error'] }}</h3>
