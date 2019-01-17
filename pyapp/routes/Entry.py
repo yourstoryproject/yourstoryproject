@@ -1,6 +1,6 @@
-from app.utils.server import parse_response
-from app.models import Entry
-from app.api.Entry import get_entry, get_entries
+from pyapp.utils.server import parse_response
+from pyapp.models import Entry
+from pyapp.api.Entry import get_entry, get_entries
 from flask import Blueprint, render_template, request
 
 

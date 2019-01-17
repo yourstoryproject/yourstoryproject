@@ -1,4 +1,4 @@
-from app import db
+from pyapp import db
 from werkzeug import check_password_hash, generate_password_hash
 import datetime
 

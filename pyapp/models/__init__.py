@@ -1,4 +1,4 @@
-from app import db
+from pyapp import db
 
 
 tags = db.Table(

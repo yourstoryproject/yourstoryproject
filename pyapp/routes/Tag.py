@@ -1,6 +1,6 @@
-from app.utils.server import parse_response
-from app.models import Tag
-from app.api.Tag import create_tag, edit_tag, get_tag, get_tags
+from pyapp.utils.server import parse_response
+from pyapp.models import Tag
+from pyapp.api.Tag import create_tag, edit_tag, get_tag, get_tags
 from flask import Blueprint, render_template, request
 
 

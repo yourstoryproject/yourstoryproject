@@ -1,6 +1,6 @@
-from app.utils.server import parse_response
-from app.models.Account import Account
-from app.api.Account import create_account, edit_account, get_account, get_accounts
+from pyapp.utils.server import parse_response
+from pyapp.models.Account import Account
+from pyapp.api.Account import create_account, edit_account, get_account, get_accounts
 from flask import Blueprint, render_template, request
 
 

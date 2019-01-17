@@ -1,5 +1,5 @@
-from app import db
-from app.models.Entry import Entry
+from pyapp import db
+from pyapp.models.Entry import Entry
 
 
 def get_entry(entryId):

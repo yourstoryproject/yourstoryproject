@@ -1,6 +1,6 @@
-from app import db
-from app.models.Account import Account
-from app.utils.server import validate_entity
+from pyapp import db
+from pyapp.models.Account import Account
+from pyapp.utils.server import validate_entity
 
 
 def create_account(email, password):

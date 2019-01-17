@@ -1,5 +1,5 @@
-from app import db
-from app.models import tags
+from pyapp import db
+from pyapp.models import tags
 import datetime
 
 
