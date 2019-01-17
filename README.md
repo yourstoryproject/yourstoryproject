@@ -7,6 +7,12 @@ This is an open source project currently under development. Please give us a sta
 # Local Development
 For ease of use, set up virtualenvwrapper for python virtal environments.
 
+Create your virtual environment in the `server/` directory
+```
+cd server
+python3 -m venv venv
+```
+
 Install project dependencies
 ```
 pip install -r requirements.txt
