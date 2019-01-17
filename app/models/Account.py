@@ -2,26 +2,35 @@ from app import db
 from werkzeug import check_password_hash, generate_password_hash
 import datetime
 
-class Account(db.Model):
-    __tablename__   = 'account'
 
-    id              = db.Column(db.Integer, primary_key=True, nullable=False)
-    created_on      = db.Column(db.DateTime, default=datetime.datetime.utcnow, unique=False, nullable=False)
-    email           = db.Column(db.String(120), index=True, unique=True, nullable=False)
-    last_login      = db.Column(db.Date, default=datetime.datetime.utcnow, unique=False, nullable=True)
-    password_hash   = db.Column(db.String(64), nullable=False)
+class Account(db.Model):
+    __tablename__ = 'account'
+
+    id = db.Column(db.Integer, primary_key=True, nullable=False)
+    created_on = db.Column(
+        db.DateTime,
+        default=datetime.datetime.utcnow,
+        unique=False,
+        nullable=False)
+    email = db.Column(db.String(120), index=True, unique=True, nullable=False)
+    last_login = db.Column(
+        db.Date,
+        default=datetime.datetime.utcnow,
+        unique=False,
+        nullable=True)
+    password_hash = db.Column(db.String(64), nullable=False)
 
     def __init__(self, email, password):
         """
         Class constructor
         """
         self.created_on = datetime.datetime.utcnow()
-        self.email  = email.lower()
-        self.last_login  = datetime.datetime.utcnow()
+        self.email = email.lower()
+        self.last_login = datetime.datetime.utcnow()
         self.set_password(password)
 
     def set_password(self, password):
-        self.password_hash   = generate_password_hash(password, salt_length=8)
+        self.password_hash = generate_password_hash(password, salt_length=8)
 
     def check_password(self, password):
         return check_password_hash(self.password_hash, password)

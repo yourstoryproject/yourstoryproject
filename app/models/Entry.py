@@ -4,15 +4,32 @@ import datetime
 
 
 class Entry(db.Model):
-    __tablename__   = 'entry'
+    __tablename__ = 'entry'
 
-    id              = db.Column(db.Integer, primary_key=True, nullable=False)
-    account_id      = db.Column(db.Integer, db.ForeignKey('account.id'), nullable=False)
-    content         = db.Column(db.Text, unique=False, nullable=False)
-    created_on      = db.Column(db.DateTime, default=datetime.datetime.utcnow, unique=False, nullable=False)
-    modified_on     = db.Column(db.DateTime, default=datetime.datetime.utcnow,unique=False, nullable=True)
-    tags            = db.relationship('Tag', secondary=tags, lazy='subquery', backref=db.backref('entry', lazy=True))
-    title           = db.Column(db.String(128), unique=False, nullable=False)
+    id = db.Column(db.Integer, primary_key=True, nullable=False)
+    account_id = db.Column(
+        db.Integer,
+        db.ForeignKey('account.id'),
+        nullable=False)
+    content = db.Column(db.Text, unique=False, nullable=False)
+    created_on = db.Column(
+        db.DateTime,
+        default=datetime.datetime.utcnow,
+        unique=False,
+        nullable=False)
+    modified_on = db.Column(
+        db.DateTime,
+        default=datetime.datetime.utcnow,
+        unique=False,
+        nullable=True)
+    tags = db.relationship(
+        'Tag',
+        secondary=tags,
+        lazy='subquery',
+        backref=db.backref(
+            'entry',
+            lazy=True))
+    title = db.Column(db.String(128), unique=False, nullable=False)
 
     def __init__(self, account_id, content, tags, title):
         """

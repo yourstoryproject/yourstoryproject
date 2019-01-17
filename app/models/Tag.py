@@ -3,12 +3,20 @@ import datetime
 
 
 class Tag(db.Model):
-    __tablename__   = 'tag'
+    __tablename__ = 'tag'
 
-    id              = db.Column(db.Integer, primary_key=True, nullable=False)
-    created_on      = db.Column(db.DateTime, default=datetime.datetime.utcnow, nullable=False, unique=False)
-    modified_on     = db.Column(db.Date, default=datetime.datetime.utcnow, nullable=True, unique=False)
-    name            = db.Column(db.String(48), unique=True, nullable=False)
+    id = db.Column(db.Integer, primary_key=True, nullable=False)
+    created_on = db.Column(
+        db.DateTime,
+        default=datetime.datetime.utcnow,
+        nullable=False,
+        unique=False)
+    modified_on = db.Column(
+        db.Date,
+        default=datetime.datetime.utcnow,
+        nullable=True,
+        unique=False)
+    name = db.Column(db.String(48), unique=True, nullable=False)
 
     def __init__(self, name):
         """
