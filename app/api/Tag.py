@@ -16,6 +16,7 @@ def create_tag(name):
 
     return response
 
+
 def edit_tag(tagId, tagName):
     if tagId == '':
         response = {"error": "Please provide an tag Id", "status_code": 400}
@@ -42,13 +43,15 @@ def edit_tag(tagId, tagName):
 
         db.session.commit()
 
-        response = {"success": "Tag name was changed from " + oldTag + " to " + tagName, "status_code": 201}
+        response = {"success": "Tag name was changed from " +
+                    oldTag + " to " + tagName, "status_code": 201}
 
         return response
-    except:
+    except BaseException:
         response = {"error": "Unable to change tag name.", "status_code": 500}
 
         return response
+
 
 def get_tag(tagId):
     if tagId == '':
@@ -65,16 +68,22 @@ def get_tag(tagId):
             response = {"data": [tag.to_json()], "status_code": 200}
 
         return response
-    except:
-        response = {"error": "Unable to perform query, please check parameters and try again", "status_code": 500}
+    except BaseException:
+        response = {
+            "error": "Unable to perform query, please check parameters and try again",
+            "status_code": 500}
 
         return response
+
 
 def get_tags():
     tags = Tag.query.all()
 
     if len(tags) > 0:
-        response = {"data": [tag.to_json() for tag in tags] , "status_code": 200}
+        response = {
+            "data": [
+                tag.to_json() for tag in tags],
+            "status_code": 200}
     else:
         response = {"error": "No tags found", "status_code": 400}
 

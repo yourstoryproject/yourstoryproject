@@ -17,16 +17,22 @@ def get_entry(entryId):
             response = {"data": [entry.to_json()], "status_code": 200}
 
         return response
-    except:
-        response = {"error": "Unable to perform query, please check parameters and try again", "status_code": 500}
+    except BaseException:
+        response = {
+            "error": "Unable to perform query, please check parameters and try again",
+            "status_code": 500}
 
         return response
+
 
 def get_entries():
     entries = Entry.query.all()
 
     if len(entries) > 0:
-        response = {"data": [entry.to_json() for entry in entries] , "status_code": 200}
+        response = {
+            "data": [
+                entry.to_json() for entry in entries],
+            "status_code": 200}
     else:
         response = {"error": "No entries found", "status_code": 400}
 
