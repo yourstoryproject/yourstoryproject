@@ -16,7 +16,7 @@ def index():
 def getAllTags():
     response = get_tags()
 
-    return render_template('api.html', response=response)
+    return parse_response(response, response["status"])
 
 
 @blueprint.route('/get_tag/', methods=['GET'])
@@ -25,7 +25,7 @@ def getSingleTag():
 
     response = get_tag(tagId)
 
-    return render_template('api.html', response=response)
+    return parse_response(response, response["status"])
 
 
 @blueprint.route('/create/', methods=['POST'])
