@@ -44,7 +44,7 @@ localhost:5000
 # Contributing
 Please refer to the [Contributing Guidelines](./CONTRIBUTING.md) before contributing.
 
-See the rest of our [issues](https://github.com/jwu910/yourstoryproject/issues)
+See the rest of our [issues](https://github.com/yourstoryproject/yourstoryproject/issues)
 
 
 ### License
