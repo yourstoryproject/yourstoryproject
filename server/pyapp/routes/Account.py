@@ -16,7 +16,7 @@ def index():
 def getAllAccounts():
     response = get_accounts()
 
-    return render_template('api.html', response=response)
+    return parse_response(response, response["status"])
 
 
 @blueprint.route('/get_account/', methods=['GET'])
@@ -25,7 +25,7 @@ def getSingleAccount():
 
     response = get_account(accountId)
 
-    return render_template('api.html', response=response)
+    return parse_response(response, response["status"])
 
 
 @blueprint.route('/create/', methods=['POST'])

@@ -16,7 +16,7 @@ def index():
 def getAllEntries():
     response = get_entries()
 
-    return render_template('api.html', response=response)
+    return parse_response(response, response["status"])
 
 
 @blueprint.route('/get_entry/', methods=['GET'])
@@ -25,4 +25,4 @@ def getSingleEntry():
 
     response = get_entry(entryId)
 
-    return render_template('api.html', response=response)
+    return parse_response(response, response["status"])
