@@ -1,5 +1,6 @@
 from pyapp import db
 from pyapp.models.Tag import Tag
+from pyapp.utils.server import parse_response
 import datetime
 
 
@@ -10,28 +11,30 @@ def create_tag(name):
         db.session.add(newTag)
         db.session.commit()
 
-        response = {"message": "Successfully created tag", "status": 201}
-    else:
-        response = {"message": "Tag already exists", "status": 400}
+        response = {"data": {"message": "Successfully created tag"}}
 
-    return response
+        return parse_response(response, 201)
+    else:
+        response = {"data": {"message": "Tag already exists"}}
+
+        return parse_response(response, 400)
 
 
 def edit_tag(tagId, tagName):
     if tagId == '':
-        response = {"error": "Please provide an tag Id", "status": 400}
+        response = {"data": {"error": "Please provide an tag Id"}}
 
-        return response
+        return parse_response(response, 400)
 
     if not Tag.query.filter_by(id=tagId).first():
-        response = {"error": "Tag does not exist", "status": 400}
+        response = {"data": {"error": "Tag does not exist"}}
 
-        return response
+        return parse_response(response, 400)
 
     if tagName == '':
-        response = {"error": "Please provide new tag name", "status": 400}
+        response = {"data": {"error": "Please provide new tag name"}}
 
-        return response
+        return parse_response(response, 400)
 
     try:
         tag = Tag.query.get(tagId)
@@ -43,48 +46,28 @@ def edit_tag(tagId, tagName):
 
         db.session.commit()
 
-        response = {"success": "Tag name was changed from " +
-                    oldTag + " to " + tagName, "status": 201}
+        response = {"data": {"success": "Tag name was changed from " +
+                             oldTag + " to " + tagName}}
 
-        return response
+        return parse_response(response, 201)
     except BaseException:
-        response = {"error": "Unable to change tag name.", "status": 500}
+        response = {"data": {"error": "Unable to change tag name."}}
 
-        return response
+        return parse_response(response, 500)
 
 
-def get_tag(tagId):
-    if tagId == '':
-        response = {"error": "Please provide an tag Id", "status": 400}
-
-        return response
-
+def get_tags(tagId):
     try:
-        tag = Tag.query.get(tagId)
-
-        if not tag:
-            response = {"error": "Tag not found", "status": 400}
+        if tagId == None:
+            tags = Tag.query.all()
         else:
-            response = {"data": [tag.to_json()], "status": 200}
+            tags = Tag.query.get(tagId)
 
-        return response
-    except BaseException:
-        response = {
-            "error": "Unable to perform query, please check parameters and try again",
-            "status": 500}
+        response = {"data": [tag.to_json() for tag in tags]}
 
-        return response
+        return parse_response(response, 200)
 
+    except BaseException as e:
+        response = {"data": {"error": "Unable to get tags", "message": str(e)}}
 
-def get_tags():
-    tags = Tag.query.all()
-
-    if len(tags) > 0:
-        response = {
-            "data": [
-                tag.to_json() for tag in tags],
-            "status": 200}
-    else:
-        response = {"error": "No tags found", "status": 400}
-
-    return response
+        return parse_response(response, 400)

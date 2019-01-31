@@ -1,6 +1,6 @@
 from pyapp.utils.server import parse_response
 from pyapp.models import Tag
-from pyapp.api.Tag import create_tag, edit_tag, get_tag, get_tags
+from pyapp.api.Tag import create_tag, edit_tag, get_tags
 from flask import Blueprint, render_template, request
 
 
@@ -12,20 +12,13 @@ def index():
     return render_template('api.html')
 
 
-@blueprint.route('/get_tags/')
-def getAllTags():
-    response = get_tags()
-
-    return parse_response(response, response["status"])
-
-
-@blueprint.route('/get_tag/', methods=['GET'])
-def getSingleTag():
+@blueprint.route('/get_tags/', methods=['GET'])
+def tags():
     tagId = request.args.get('tagId')
 
-    response = get_tag(tagId)
+    response = get_tags(tagId)
 
-    return parse_response(response, response["status"])
+    return response
 
 
 @blueprint.route('/create/', methods=['POST'])
