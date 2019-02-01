@@ -1,6 +1,6 @@
 from pyapp import db
 from pyapp.models.Account import Account
-from pyapp.utils.server import validate_entity
+from pyapp.utils.server import parse_response, validate_entity
 
 
 def create_account(email, password):
@@ -10,20 +10,20 @@ def create_account(email, password):
         db.session.add(newAccount)
         db.session.commit()
 
-        response = {
-            "message": "Successfully created account",
-            "status": 201}
-    else:
-        response = {"message": "Email already exists", "status": 400}
+        response = {"accounts": {"message": "Successfully created account"}}
 
-    return response
+        return parse_response(response, 201)
+    else:
+        response = {"accounts": {"message": "Email already exists"}}
+
+    return parse_response(response, 400)
 
 
 def edit_account(accountId, email, password):
-    response = validate_entity(model=Account, entityId=accountId)
+    response = {"accounts": validate_entity(model=Account, entityId=accountId)}
 
     if response:
-        return response
+        return parse_response(response, 400)
 
     try:
         account = Account.query.get(accountId)
@@ -34,58 +34,39 @@ def edit_account(accountId, email, password):
 
         db.session.commit()
 
-        response = {
-            "success": "Successfully changed email from " +
-            oldEmail +
-            " to " +
-            email,
-            "status": 200}
+        response = {"accounts": {"success": "Successfully changed email from " +
+                             oldEmail +
+                             " to " +
+                             email}}
 
-        return response
+        return parse_response(response, 200)
     except BaseException:
-        response = {
-            "error": "Unable to update information",
-            "status": 500}
+        response = {"accounts": {"error": "Unable to update information"}}
 
-        return response
+        return parse_response(response, 500)
 
 
 # Email should already be validated at this point
 # This api should assume user is also authenticated?
 
 
-def get_account(accountId):
-    response = validate_entity(model=Account, entityId=accountId)
-
-    if response:
-        return response
-
+def get_accounts(accountId):
     try:
-        account = Account.query.get(accountId)
-
-        if not account:
-            response = {"error": "Account not found", "status": 400}
+        if accountId == None:
+            accounts = Account.query.all()
         else:
-            response = {"data": [account.to_json()], "status": 200}
+            response = {"accounts": validate_entity(model=Account, entityId=accountId)}
 
-        return response
+            if response:
+                return parse_response(response, 400)
+
+            accounts = Account.query.get(accountId)
+
+        response = {"accounts": [account.to_json() for account in accounts]}
+
+        return parse_response(response, 200)
     except BaseException:
-        response = {
-            "error": "Unable to perform query, please check parameters and try again",
-            "status": 500}
+        response = {"accounts": {
+            "error": "Unable to perform query, please check parameters and try again"}}
 
-        return response
-
-
-def get_accounts():
-    accounts = Account.query.all()
-
-    if len(accounts) > 0:
-        response = {
-            "data": [
-                account.to_json() for account in accounts],
-            "status": 200}
-    else:
-        response = {"error": "No accounts found", "status": 400}
-
-    return response
+        return parse_response(response, 500)

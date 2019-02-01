@@ -1,6 +1,6 @@
 from pyapp.utils.server import parse_response
 from pyapp.models.Account import Account
-from pyapp.api.Account import create_account, edit_account, get_account, get_accounts
+from pyapp.api.Account import create_account, edit_account, get_accounts
 from flask import Blueprint, render_template, request
 
 
@@ -12,20 +12,13 @@ def index():
     return render_template('api.html')
 
 
-@blueprint.route('/get_accounts/')
-def getAllAccounts():
-    response = get_accounts()
-
-    return parse_response(response, response["status"])
-
-
-@blueprint.route('/get_account/', methods=['GET'])
+@blueprint.route('/get_accounts/', methods=['GET'])
 def getSingleAccount():
     accountId = request.args.get('accountId')
 
-    response = get_account(accountId)
+    response = get_accounts(accountId)
 
-    return parse_response(response, response["status"])
+    return response
 
 
 @blueprint.route('/create/', methods=['POST'])
@@ -35,7 +28,7 @@ def add_account():
 
     response = create_account(email, password)
 
-    return parse_response(response, response["status"])
+    return response
 
 
 @blueprint.route('/edit/', methods=['PUT'])
@@ -49,4 +42,4 @@ def editAccount():
         email=email,
         password=password)
 
-    return parse_response(response, response["status"])
+    return response
