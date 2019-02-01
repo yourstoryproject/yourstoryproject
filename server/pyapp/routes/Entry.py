@@ -1,6 +1,6 @@
 from pyapp.utils.server import parse_response
 from pyapp.models import Entry
-from pyapp.api.Entry import get_entry, get_entries
+from pyapp.api.Entry import get_entries
 from flask import Blueprint, render_template, request
 
 
@@ -13,16 +13,9 @@ def index():
 
 
 @blueprint.route('/get_entries/', methods=['GET'])
-def getAllEntries():
-    response = get_entries()
-
-    return parse_response(response, response["status"])
-
-
-@blueprint.route('/get_entry/', methods=['GET'])
-def getSingleEntry():
+def getEntries():
     entryId = request.args.get('entryId')
 
-    response = get_entry(entryId)
+    response = get_entries(entryId)
 
-    return parse_response(response, response["status"])
+    return response

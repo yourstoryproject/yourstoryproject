@@ -1,39 +1,24 @@
 from pyapp import db
 from pyapp.models.Entry import Entry
+from pyapp.utils.server import parse_response, validate_entity
 
-
-def get_entry(entryId):
-    if entryId == '':
-        response = {"error": "Please provide an entry Id", "status": 400}
-
-        return response
-
+def get_entries(entryId):
     try:
-        entry = Entry.query.get(entryId)
-
-        if not entry:
-            response = {"error": "Entry not found", "status": 400}
+        if entryId == None:
+            entries = Entry.query.all()
         else:
-            response = {"data": [entry.to_json()], "status": 200}
+            response = {"entries": validate_entity(model=Entry, entityId=entryId)}
 
-        return response
-    except BaseException:
-        response = {
-            "error": "Unable to perform query, please check parameters and try again",
-            "status": 500}
+            if response:
+                return parse_response(response, 400)
 
-        return response
+            entries = Entry.query.get(entryId)
 
+        response = {"entries": [entry.to_json() for entry in entries]}
 
-def get_entries():
-    entries = Entry.query.all()
+        return parse_response(response, 200)
 
-    if len(entries) > 0:
-        response = {
-            "data": [
-                entry.to_json() for entry in entries],
-            "status": 200}
-    else:
-        response = {"error": "No entries found", "status": 400}
+    except BaseException as e:
+        response = {"entries": {"error": "Unable to get entries", "message": str(e)}}
 
-    return response
+        return parse_response(response, 400)
