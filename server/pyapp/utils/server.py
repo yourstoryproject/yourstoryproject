@@ -7,7 +7,7 @@ def parse_response(res, status):
     """
     return Response(
         mimetype="application/json",
-        response=json.dumps(res),
+        response=json.dumps({"data": res}),
         status=status
     )
 
@@ -16,16 +16,13 @@ def validate_entity(model, entityId):
     """
     Check if <model> has a matching entity by <entityId>
     """
-    if entityId == '':
-        response = {"error": "Please provide entityId", "status": 400}
+    if entityId == None:
+        response = {"error": "Please provide entityId"}
 
         return response
 
     if not model.query.filter_by(id=entityId).first():
-        response = {
-            "error": "No entity found with entityId: " +
-            entityId,
-            "status": 400}
+        response = {"error": "No entity found with entityId: " + entityId}
 
         return response
     else:

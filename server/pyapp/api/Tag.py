@@ -1,6 +1,6 @@
 from pyapp import db
 from pyapp.models.Tag import Tag
-from pyapp.utils.server import parse_response
+from pyapp.utils.server import parse_response, validate_entity
 import datetime
 
 
@@ -11,28 +11,28 @@ def create_tag(name):
         db.session.add(newTag)
         db.session.commit()
 
-        response = {"data": {"message": "Successfully created tag"}}
+        response = {"tags": {"message": "Successfully created tag"}}
 
         return parse_response(response, 201)
     else:
-        response = {"data": {"message": "Tag already exists"}}
+        response = {"tags": {"message": "Tag already exists"}}
 
         return parse_response(response, 400)
 
 
 def edit_tag(tagId, tagName):
     if tagId == '':
-        response = {"data": {"error": "Please provide an tag Id"}}
+        response = {"tags": {"error": "Please provide an tag Id"}}
 
         return parse_response(response, 400)
 
     if not Tag.query.filter_by(id=tagId).first():
-        response = {"data": {"error": "Tag does not exist"}}
+        response = {"tags": {"error": "Tag does not exist"}}
 
         return parse_response(response, 400)
 
     if tagName == '':
-        response = {"data": {"error": "Please provide new tag name"}}
+        response = {"tags": {"error": "Please provide new tag name"}}
 
         return parse_response(response, 400)
 
@@ -46,12 +46,12 @@ def edit_tag(tagId, tagName):
 
         db.session.commit()
 
-        response = {"data": {"success": "Tag name was changed from " +
+        response = {"tags": {"success": "Tag name was changed from " +
                              oldTag + " to " + tagName}}
 
         return parse_response(response, 201)
     except BaseException:
-        response = {"data": {"error": "Unable to change tag name."}}
+        response = {"tags": {"error": "Unable to change tag name."}}
 
         return parse_response(response, 500)
 
@@ -61,13 +61,18 @@ def get_tags(tagId):
         if tagId == None:
             tags = Tag.query.all()
         else:
+            response = {"tags": validate_entity(model=Tag, entityId=tagId)}
+
+            if response:
+                return parse_response(response, 400)
+
             tags = Tag.query.get(tagId)
 
-        response = {"data": [tag.to_json() for tag in tags]}
+        response = {"tags": [tag.to_json() for tag in tags]}
 
         return parse_response(response, 200)
 
     except BaseException as e:
-        response = {"data": {"error": "Unable to get tags", "message": str(e)}}
+        response = {"tags": {"error": "Unable to get tags", "message": str(e)}}
 
         return parse_response(response, 400)
