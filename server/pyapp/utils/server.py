@@ -7,7 +7,7 @@ def parse_response(res, status):
     """
     return Response(
         mimetype="application/json",
-        response=json.dumps({"data": res}),
+        response=json.dumps(res),
         status=status
     )
 

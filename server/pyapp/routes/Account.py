@@ -8,12 +8,8 @@ blueprint = Blueprint('accounts', __name__, url_prefix='/api/v1/accounts')
 
 
 @blueprint.route('/', methods=['GET'])
-def index():
-    return render_template('api.html')
-
-
 @blueprint.route('/get_accounts/', methods=['GET'])
-def getSingleAccount():
+def getAccounts():
     accountId = request.args.get('accountId')
 
     response = get_accounts(accountId)

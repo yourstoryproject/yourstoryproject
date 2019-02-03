@@ -8,10 +8,6 @@ blueprint = Blueprint('entries', __name__, url_prefix='/api/v1/entries')
 
 
 @blueprint.route('/', methods=['GET'])
-def index():
-    return render_template('api.html')
-
-
 @blueprint.route('/get_entries/', methods=['GET'])
 def getEntries():
     entryId = request.args.get('entryId')

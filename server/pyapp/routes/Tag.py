@@ -8,12 +8,7 @@ blueprint = Blueprint('tags', __name__, url_prefix='/api/v1/tags')
 
 
 @blueprint.route('/', methods=['GET'])
-def index():
-    return render_template('api.html')
-
-
-@blueprint.route('/get_tags/', methods=['GET'])
-def tags():
+def getTags():
     tagId = request.args.get('tagId')
 
     response = get_tags(tagId)
