@@ -7,6 +7,12 @@ const Router = EmberRouter.extend({
 });
 
 Router.map(function() {
+  this.route('home');
+  this.route('tag');
+  this.route('not-found', { path: '/*path' });
+  this.route('account');
 });
 
 export default Router;
+Router.map(function() {
+});
