@@ -3,10 +3,12 @@ astroid==2.0.4
 autopep8==1.4.3
 Click==7.0
 Flask==1.0.2
+Flask-Cors==3.0.7
 Flask-Migrate==2.3.1
 Flask-Script==2.0.6
 Flask-SQLAlchemy==2.3.2
 Flask-WTF==0.14.2
+gunicorn==19.9.0
 isort==4.3.4
 itsdangerous==1.1.0
 Jinja2==2.10
