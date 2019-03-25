@@ -5,18 +5,25 @@ from pyapp.utils.server import parse_response, validate_entity
 
 def create_account(email, password):
     if not Account.query.filter_by(email=email).first():
-        newAccount = Account(email=email, password=password)
+        try:
+            newAccount = Account(email=email, password=password)
 
-        db.session.add(newAccount)
-        db.session.commit()
+            db.session.add(newAccount)
+            db.session.commit()
 
-        response = {"accounts": {"message": "Successfully created account"}}
+            response = {"accounts": {
+                "message": "Successfully created account"}}
 
-        return parse_response(response, 201)
+            return parse_response(response, 201)
+        except BaseException as e:
+            response = {"accounts": {
+                "error": "Unable to create account", "message": str(e)}}
+
+            return parse_response(response, 400)
     else:
         response = {"accounts": {"message": "Email already exists"}}
 
-    return parse_response(response, 400)
+        return parse_response(response, 400)
 
 
 def edit_account(accountId, email, password):
