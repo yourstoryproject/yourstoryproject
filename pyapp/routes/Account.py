@@ -5,7 +5,6 @@ from flask import Blueprint, render_template, request
 from flask_login import login_required
 from pyapp.utils.auth import role_required
 
-
 blueprint = Blueprint('accounts', __name__, url_prefix='/api/v1/accounts')
 
 

@@ -47,7 +47,7 @@ def edit_tag(tagId, tagName):
         db.session.commit()
 
         response = {"tags": {"success": "Tag name was changed from " +
-                             oldTag + " to " + tagName}}
+                                        oldTag + " to " + tagName}}
 
         return parse_response(response, 201)
     except BaseException:
@@ -58,7 +58,7 @@ def edit_tag(tagId, tagName):
 
 def get_tags(tagId):
     try:
-        if tagId == None:
+        if tagId is None:
             tags = Tag.query.all()
         else:
             response = {"tags": validate_entity(model=Tag, entityId=tagId)}

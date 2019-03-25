@@ -16,7 +16,7 @@ def validate_entity(model, entityId):
     """
     Check if <model> has a matching entity by <entityId>
     """
-    if entityId == None:
+    if entityId is None:
         response = {"error": "Please provide entityId"}
 
         return response

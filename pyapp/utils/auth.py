@@ -10,5 +10,7 @@ def role_required(role_name):
             if not current_user.has_role(role_name):
                 return redirect(url_for('auth'))
             return func(*args, **kwargs)
+
         return authorize
+
     return decorator

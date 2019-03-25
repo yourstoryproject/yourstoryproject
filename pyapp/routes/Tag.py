@@ -3,7 +3,6 @@ from pyapp.models import Tag
 from pyapp.api.Tag import create_tag, edit_tag, get_tags
 from flask import Blueprint, render_template, request
 
-
 blueprint = Blueprint('tags', __name__, url_prefix='/api/v1/tags')
 
 

@@ -1,6 +1,5 @@
 from pyapp import db
 
-
 tags = db.Table(
     'tags',
     db.Column(

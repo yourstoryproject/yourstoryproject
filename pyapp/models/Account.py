@@ -1,5 +1,4 @@
 from pyapp import db
-from pyapp import login_manager
 from werkzeug import check_password_hash, generate_password_hash
 import datetime
 

@@ -5,7 +5,7 @@ from pyapp.utils.server import parse_response, validate_entity
 
 def get_entries(entryId):
     try:
-        if entryId == None:
+        if entryId is None:
             entries = Entry.query.all()
         else:
             response = {"entries": validate_entity(

@@ -1,71 +1,71 @@
 {% extends "base.html" %}
 
 {% block content %}
-    <a href="/api/v1/">API Home</a>
+<a href="/api/v1/">API Home</a>
 
-    <hr>
+<hr>
 
-    <div class="results">
-        {% if response %}
-            <h3>Status Code: {{ response['status'] }}</h3>
+<div class="results">
+    {% if response %}
+    <h3>Status Code: {{ response['status'] }}</h3>
 
-            {% if response['error'] %}
-                <h4>Error: {{ response['error'] }}</h3>
-            {% endif %}
-
-            <table>
-                {% for entry in response['data'] %}
-                    <tr>
-                        {% for key, value in entry.items() %}
-                            <td style="padding: 8px;">{{ key }}: {{ value }}</td>
-                        {% endfor %}
-                    </tr>
-                {% endfor %}
-            </table>
+    {% if response['error'] %}
+    <h4>Error: {{ response['error'] }}</h3>
         {% endif %}
-    </div>
 
-    <div class="button-container">
-        <form action="/api/v1/entries/get_entries" method="GET" name="get_entries">
-            <input type="submit" value="Get All Entries">
-        </form>
-    </div>
+        <table>
+            {% for entry in response['data'] %}
+            <tr>
+                {% for key, value in entry.items() %}
+                <td style="padding: 8px;">{{ key }}: {{ value }}</td>
+                {% endfor %}
+            </tr>
+            {% endfor %}
+        </table>
+        {% endif %}
+</div>
 
-    <div class="button-container">
-        <form action="/api/v1/entries/get_entry/" method="GET" name="get_entry">
-            <input type="submit" value="Get Entry by Id">
-            <input type="text" name="entryId" placeholder="id">
-        </form>
-    </div>
+<div class="button-container">
+    <form action="/api/v1/entries/get_entries" method="GET" name="get_entries">
+        <input type="submit" value="Get All Entries">
+    </form>
+</div>
 
-    <div class="button-container">
-        <form action="/api/v1/tags/get_tags" method="GET" name="get_tags">
-            <input type="submit" value="Get All Tags">
-        </form>
-    </div>
+<div class="button-container">
+    <form action="/api/v1/entries/get_entry/" method="GET" name="get_entry">
+        <input type="submit" value="Get Entry by Id">
+        <input type="text" name="entryId" placeholder="id">
+    </form>
+</div>
 
-    <div class="button-container">
-        <form action="/api/v1/tags/get_tag/" method="GET" name="get_tag">
-            <input type="submit" value="Get Tag by Id">
-            <input type="text" name="tagId" placeholder="id">
-        </form>
-    </div>
+<div class="button-container">
+    <form action="/api/v1/tags/get_tags" method="GET" name="get_tags">
+        <input type="submit" value="Get All Tags">
+    </form>
+</div>
 
-    <div class="button-container">
-        <form action="/api/v1/accounts/get_accounts" method="GET" name="get_accounts">
-            <input type="submit" value="Get All Accounts">
-        </form>
-    </div>
+<div class="button-container">
+    <form action="/api/v1/tags/get_tag/" method="GET" name="get_tag">
+        <input type="submit" value="Get Tag by Id">
+        <input type="text" name="tagId" placeholder="id">
+    </form>
+</div>
 
-    <div class="button-container">
-        <form action="/api/v1/accounts/get_account/" method="GET" name="get_account">
-            <input type="submit" value="Get Account by Id">
-            <input type="text" name="accountId" placeholder="id">
-        </form>
-    </div>
+<div class="button-container">
+    <form action="/api/v1/accounts/get_accounts" method="GET" name="get_accounts">
+        <input type="submit" value="Get All Accounts">
+    </form>
+</div>
+
+<div class="button-container">
+    <form action="/api/v1/accounts/get_account/" method="GET" name="get_account">
+        <input type="submit" value="Get Account by Id">
+        <input type="text" name="accountId" placeholder="id">
+    </form>
+</div>
 
 
-    <style>
+<style>
         input {
             width: 150px;
         }
@@ -78,5 +78,7 @@
             max-height: 40%;
             overflow-y: scroll;
         }
-    </style>
+
+
+</style>
 {% endblock %}

@@ -42,9 +42,9 @@ def edit_account(accountId, email, password):
         db.session.commit()
 
         response = {"accounts": {"success": "Successfully changed email from " +
-                                 oldEmail +
-                                 " to " +
-                                 email}}
+                                            oldEmail +
+                                            " to " +
+                                            email}}
 
         return parse_response(response, 200)
     except BaseException:
@@ -59,7 +59,7 @@ def edit_account(accountId, email, password):
 
 def get_accounts(accountId):
     try:
-        if accountId == None:
+        if accountId is None:
             accounts = Account.query.all()
         else:
             response = {"accounts": validate_entity(
