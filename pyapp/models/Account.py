@@ -43,7 +43,7 @@ class Account(db.Model):
         return True
 
     def get_id(self):
-        return self.email
+        return self.id
 
     def has_role(self, role):
         if self.role == role:

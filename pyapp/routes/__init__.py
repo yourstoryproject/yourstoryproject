@@ -17,8 +17,8 @@ pyapp.register_blueprint(Tag.blueprint)
 
 
 @login_manager.user_loader
-def load_user(email):
-    return Account_Model.query.filter_by(email=email).first()
+def load_user(id):
+    return Account_Model.query.get(int(id))
 
 
 @pyapp.route('/')
