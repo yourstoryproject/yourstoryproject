@@ -2,9 +2,9 @@ from flask import flash, redirect, render_template, request, send_from_directory
 from flask_cors import CORS
 from flask_login import current_user, login_required, login_user, logout_user
 from pyapp import login_manager, pyapp, db
+from pyapp.forms.LoginForm import LoginForm
 from pyapp.models.Account import Account as Account_Model
 from pyapp.routes import Account, Entry, Tag
-from pyapp.forms.LoginForm import LoginForm
 from pyapp.utils.auth import role_required
 from werkzeug.urls import url_parse
 
@@ -15,6 +15,9 @@ pyapp.register_blueprint(Account.blueprint)
 pyapp.register_blueprint(Entry.blueprint)
 pyapp.register_blueprint(Tag.blueprint)
 
+pyapp.config.update(
+    PERMANENT_SESSION_LIFETIME=600
+)
 
 @login_manager.user_loader
 def load_user(id):
