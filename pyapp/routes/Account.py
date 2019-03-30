@@ -1,8 +1,6 @@
-from pyapp.utils.server import parse_response
-from pyapp.models.Account import Account
-from pyapp.api.Account import create_account, edit_account, get_accounts
 from flask import Blueprint, render_template, request
 from flask_login import login_required
+from pyapp.api.Account import create_account, edit_account, get_accounts
 from pyapp.utils.auth import role_required
 
 blueprint = Blueprint('accounts', __name__, url_prefix='/api/v1/accounts')
@@ -12,10 +10,10 @@ blueprint = Blueprint('accounts', __name__, url_prefix='/api/v1/accounts')
 @blueprint.route('/get_accounts/', methods=['GET'])
 @login_required
 @role_required('admin')
-def getAccounts():
-    accountId = request.args.get('accountId')
+def get_accounts():
+    account_id = request.args.get('account_id')
 
-    response = get_accounts(accountId)
+    response = get_accounts(account_id)
 
     return response
 
@@ -32,13 +30,13 @@ def add_account():
 
 @blueprint.route('/edit/', methods=['PUT'])
 @login_required
-def editAccount():
-    accountId = request.args.get('accountId')
+def edit_account():
+    account_id = request.args.get('account_id')
     email = request.args.get('email')
     password = request.args.get('password')
 
     response = edit_account(
-        accountId=accountId,
+        account_id=account_id,
         email=email,
         password=password)
 

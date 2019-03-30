@@ -1,7 +1,7 @@
+from bleach.sanitizer import Cleaner
 from pyapp import db
 from pyapp.models.Tag import Tag
 from pyapp.utils.server import parse_response, validate_entity
-from bleach.sanitizer import Cleaner
 import datetime
 
 cleaner = Cleaner()
@@ -65,12 +65,12 @@ def edit_tag(tag_id, tag_name):
 
 
 def get_tags(tag_id):
-    tag_id = int(tag_id)
-
     try:
         if tag_id is None:
             tags = Tag.query.all()
         else:
+            tag_id = int(tag_id)
+
             response = {"tags": validate_entity(model=Tag, entityId=tag_id)}
 
             if response:

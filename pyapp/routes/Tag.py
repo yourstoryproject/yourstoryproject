@@ -1,34 +1,32 @@
-from pyapp.utils.server import parse_response
-from pyapp.models import Tag
+from flask import Blueprint, request
 from pyapp.api.Tag import create_tag, edit_tag, get_tags
-from flask import Blueprint, render_template, request
 
 blueprint = Blueprint('tags', __name__, url_prefix='/api/v1/tags')
 
 
 @blueprint.route('/', methods=['GET'])
-def getTags():
-    tagId = request.args.get('tagId')
+def get_tags():
+    tag_id = request.args.get('tag_id')
 
-    response = get_tags(tagId)
+    response = get_tags(tag_id)
 
     return response
 
 
 @blueprint.route('/create/', methods=['POST'])
 def add_tag():
-    tagName = request.args.get('tagName')
+    tag_name = request.args.get('tag_name')
 
-    response = create_tag(tagName)
+    response = create_tag(tag_name)
 
     return response
 
 
 @blueprint.route('/edit/', methods=['PUT'])
-def editTag():
-    tagId = request.args.get('tagId')
-    tagName = request.args.get('tagName')
+def edit_tag():
+    tag_id = request.args.get('tag_id')
+    tag_name = request.args.get('tag_name')
 
-    response = edit_tag(tagId=tagId, tagName=tagName)
+    response = edit_tag(tag_id=tag_id, tag_name=tag_name)
 
     return response

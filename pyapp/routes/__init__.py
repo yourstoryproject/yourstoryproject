@@ -1,3 +1,4 @@
+from bleach.sanitizer import Cleaner
 from flask import flash, redirect, render_template, request, send_from_directory, url_for
 from flask_cors import CORS
 from flask_login import current_user, login_required, login_user, logout_user
@@ -7,7 +8,6 @@ from pyapp.models.Account import Account as Account_Model
 from pyapp.routes import Account, Entry, Tag
 from pyapp.utils.auth import role_required
 from werkzeug.urls import url_parse
-from bleach.sanitizer import Cleaner
 
 # Allow CORS so client can make requests to DB
 CORS(pyapp)
