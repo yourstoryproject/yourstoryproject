@@ -10,7 +10,7 @@
     <h3>Status Code: {{ response['status'] }}</h3>
 
     {% if response['error'] %}
-    <h4>Error: {{ response['error'] }}</h3>
+    <h4>Error: {{ response['error'] }}</h4>
         {% endif %}
 
         <table>
@@ -32,9 +32,9 @@
 </div>
 
 <div class="button-container">
-    <form action="/api/v1/entries/get_entry/" method="GET" name="get_entry">
+    <form action="/api/v1/entries/get_entries/" method="GET" name="get_entry">
         <input type="submit" value="Get Entry by Id">
-        <input type="text" name="entryId" placeholder="id">
+        <input type="text" name="entry_id" placeholder="id">
     </form>
 </div>
 
@@ -45,9 +45,9 @@
 </div>
 
 <div class="button-container">
-    <form action="/api/v1/tags/get_tag/" method="GET" name="get_tag">
+    <form action="/api/v1/tags/get_tags/" method="GET" name="get_tag">
         <input type="submit" value="Get Tag by Id">
-        <input type="text" name="tagId" placeholder="id">
+        <input type="text" name="tag_id" placeholder="id">
     </form>
 </div>
 
@@ -58,9 +58,9 @@
 </div>
 
 <div class="button-container">
-    <form action="/api/v1/accounts/get_account/" method="GET" name="get_account">
+    <form action="/api/v1/accounts/get_accounts/" method="GET" name="get_account">
         <input type="submit" value="Get Account by Id">
-        <input type="text" name="accountId" placeholder="id">
+        <input type="text" name="account_id" placeholder="id">
     </form>
 </div>
 

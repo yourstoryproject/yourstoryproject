@@ -37,7 +37,7 @@ def edit_account(account_id, email, password):
     email = cleaner.clean(email)
     password = cleaner.clean(password)
 
-    response = {"accounts": validate_entity(model=Account, entityId=account_id)}
+    response = {"accounts": validate_entity(model=Account, entity_id=account_id)}
 
     if response:
         return parse_response(response, 400)
@@ -66,13 +66,13 @@ def get_accounts(account_id):
         else:
             account_id = int(account_id)
 
-            response = {"accounts": validate_entity(
-                model=Account, entityId=account_id)}
+            response = validate_entity(
+                model=Account, entity_id=account_id)
 
             if response:
-                return parse_response(response, 400)
+                return parse_response({"accounts": response}, 400)
 
-            accounts = Account.query.get(account_id)
+            accounts = [Account.query.get(account_id)]
 
         response = {"accounts": [account.to_json() for account in accounts]}
 

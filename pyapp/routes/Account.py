@@ -10,7 +10,7 @@ blueprint = Blueprint('accounts', __name__, url_prefix='/api/v1/accounts')
 @blueprint.route('/get_accounts/', methods=['GET'])
 @login_required
 @role_required('admin')
-def get_accounts():
+def get_accounts_route():
     account_id = request.args.get('account_id')
 
     response = get_accounts(account_id)
@@ -19,7 +19,7 @@ def get_accounts():
 
 
 @blueprint.route('/create/', methods=['POST'])
-def add_account():
+def add_account_route():
     email = request.args.get('email')
     password = request.args.get('password')
 
@@ -30,7 +30,7 @@ def add_account():
 
 @blueprint.route('/edit/', methods=['PUT'])
 @login_required
-def edit_account():
+def edit_account_route():
     account_id = request.args.get('account_id')
     email = request.args.get('email')
     password = request.args.get('password')

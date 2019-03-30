@@ -47,15 +47,12 @@ def edit_tag(tag_id, tag_name):
     try:
         tag = Tag.query.get(tag_id)
 
-        oldTag = tag.name
-
         tag.modified_on = datetime.datetime.utcnow()
         tag.name = tag_name
 
         db.session.commit()
 
-        response = {"tags": {"success": "Tag name was changed from " +
-                                        oldTag + " to " + tag_name}}
+        response = {"tags": {"success": "Tag name was changed!"}}
 
         return parse_response(response, 201)
     except BaseException:
@@ -71,17 +68,16 @@ def get_tags(tag_id):
         else:
             tag_id = int(tag_id)
 
-            response = {"tags": validate_entity(model=Tag, entityId=tag_id)}
+            response = validate_entity(model=Tag, entity_id=tag_id)
 
             if response:
-                return parse_response(response, 400)
+                return parse_response({"tags": response}, 400)
 
-            tags = Tag.query.get(tag_id)
+            tags = [Tag.query.get(tag_id)]
 
         response = {"tags": [tag.to_json() for tag in tags]}
 
         return parse_response(response, 200)
-
     except BaseException as e:
         response = {"tags": {"error": "Unable to get tags", "message": str(e)}}
 

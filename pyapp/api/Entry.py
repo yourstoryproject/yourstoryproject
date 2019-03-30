@@ -1,4 +1,3 @@
-from pyapp import db
 from pyapp.models.Entry import Entry
 from pyapp.utils.server import parse_response, validate_entity
 
@@ -10,13 +9,13 @@ def get_entries(entry_id):
         else:
             entry_id = int(entry_id)
 
-            response = {"entries": validate_entity(
-                model=Entry, entityId=entry_id)}
+            response = validate_entity(
+                model=Entry, entity_id=entry_id)
 
             if response:
-                return parse_response(response, 400)
+                return parse_response({"entries": response}, 400)
 
-            entries = Entry.query.get(entry_id)
+            entries = [Entry.query.get(entry_id)]
 
         response = {"entries": [entry.to_json() for entry in entries]}
 

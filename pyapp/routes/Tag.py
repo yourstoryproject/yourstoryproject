@@ -5,7 +5,8 @@ blueprint = Blueprint('tags', __name__, url_prefix='/api/v1/tags')
 
 
 @blueprint.route('/', methods=['GET'])
-def get_tags():
+@blueprint.route('/get_tags/', methods=['GET'])
+def get_tags_route():
     tag_id = request.args.get('tag_id')
 
     response = get_tags(tag_id)
@@ -14,7 +15,7 @@ def get_tags():
 
 
 @blueprint.route('/create/', methods=['POST'])
-def add_tag():
+def add_tag_route():
     tag_name = request.args.get('tag_name')
 
     response = create_tag(tag_name)
@@ -23,7 +24,7 @@ def add_tag():
 
 
 @blueprint.route('/edit/', methods=['PUT'])
-def edit_tag():
+def edit_tag_route():
     tag_id = request.args.get('tag_id')
     tag_name = request.args.get('tag_name')
 
