@@ -5,11 +5,13 @@ module.exports = {
     sourceType: 'module'
   },
   plugins: [
-    'ember'
+    'ember',
+    'jsx-a11y'
   ],
   extends: [
     'eslint:recommended',
-    'plugin:ember/recommended'
+    'plugin:ember/recommended',
+    'plugin:jsx-a11y/recommended'
   ],
   env: {
     browser: true
