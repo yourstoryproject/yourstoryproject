@@ -43,6 +43,7 @@
     "ember-source": "~3.7.0",
     "ember-welcome-page": "^3.2.0",
     "eslint-plugin-ember": "^5.2.0",
+    "eslint-plugin-jsx-a11y": "^6.2.1",
     "loader.js": "^4.7.0",
     "qunit-dom": "^0.8.0"
   },
