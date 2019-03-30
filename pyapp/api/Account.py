@@ -1,9 +1,15 @@
 from pyapp import db
 from pyapp.models.Account import Account
 from pyapp.utils.server import parse_response, validate_entity
+from bleach.sanitizer import Cleaner
+
+cleaner = Cleaner()
 
 
 def create_account(email, password):
+    email = cleaner.clean(email)
+    password = cleaner.clean(password)
+
     if not Account.query.filter_by(email=email).first():
         try:
             newAccount = Account(email=email, password=password)
@@ -26,49 +32,47 @@ def create_account(email, password):
         return parse_response(response, 400)
 
 
-def edit_account(accountId, email, password):
-    response = {"accounts": validate_entity(model=Account, entityId=accountId)}
+def edit_account(account_id, email, password):
+    account_id = int(account_id)
+    email = cleaner.clean(email)
+    password = cleaner.clean(password)
+
+    response = {"accounts": validate_entity(model=Account, entityId=account_id)}
 
     if response:
         return parse_response(response, 400)
 
     try:
-        account = Account.query.get(accountId)
+        account = Account.query.get(account_id)
 
         if email != '':
-            oldEmail = account.email
             account.email = email
 
         db.session.commit()
 
-        response = {"accounts": {"success": "Successfully changed email from " +
-                                            oldEmail +
-                                            " to " +
-                                            email}}
+        response = {"accounts": {"success": "Successfully changed email."}}
 
         return parse_response(response, 200)
-    except BaseException:
-        response = {"accounts": {"error": "Unable to update information"}}
+    except BaseException as e:
+        response = {"accounts": {"error": "Unable to update information: " + e}}
 
         return parse_response(response, 500)
 
 
-# Email should already be validated at this point
-# This api should assume user is also authenticated?
-
-
-def get_accounts(accountId):
+def get_accounts(account_id):
     try:
-        if accountId is None:
+        if account_id is None:
             accounts = Account.query.all()
         else:
+            account_id = int(account_id)
+
             response = {"accounts": validate_entity(
-                model=Account, entityId=accountId)}
+                model=Account, entityId=account_id)}
 
             if response:
                 return parse_response(response, 400)
 
-            accounts = Account.query.get(accountId)
+            accounts = Account.query.get(account_id)
 
         response = {"accounts": [account.to_json() for account in accounts]}
 

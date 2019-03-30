@@ -7,6 +7,7 @@ from pyapp.models.Account import Account as Account_Model
 from pyapp.routes import Account, Entry, Tag
 from pyapp.utils.auth import role_required
 from werkzeug.urls import url_parse
+from bleach.sanitizer import Cleaner
 
 # Allow CORS so client can make requests to DB
 CORS(pyapp)
@@ -19,9 +20,14 @@ pyapp.config.update(
     PERMANENT_SESSION_LIFETIME=600
 )
 
+cleaner = Cleaner()
+
+
 @login_manager.user_loader
-def load_user(id):
-    return Account_Model.query.get(int(id))
+def load_user(user_id):
+    user_id = int(user_id)
+
+    return Account_Model.query.get(user_id)
 
 
 @pyapp.route('/')
@@ -32,20 +38,16 @@ def index():
 
 @pyapp.route('/<path:path>')
 def forward(path):
+    path = cleaner.clean(path)
+
     return send_from_directory(pyapp.static_folder, path)
 
 
 @pyapp.route('/api/v1/')
 @login_required
 @role_required('admin')
-def apiRoute():
+def api_route():
     return render_template('api.html', title='API Home')
-
-
-@pyapp.route('/auth/')
-@login_required
-def auth():
-    return render_template('auth.html', title='Not Authorized!')
 
 
 @pyapp.route('/login', methods=['GET', 'POST'])
@@ -67,6 +69,7 @@ def login():
         login_user(user, remember=form.remember_me.data)
 
         next_page = request.args.get('next')
+
         if not next_page or url_parse(next_page).netloc != '':
             next_page = url_for('index')
         return redirect(next_page)
@@ -87,3 +90,4 @@ def logout():
     logout_user()
 
     return redirect(url_for('login'))
+

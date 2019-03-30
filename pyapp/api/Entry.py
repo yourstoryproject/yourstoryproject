@@ -3,18 +3,20 @@ from pyapp.models.Entry import Entry
 from pyapp.utils.server import parse_response, validate_entity
 
 
-def get_entries(entryId):
+def get_entries(entry_id):
     try:
-        if entryId is None:
+        if entry_id is None:
             entries = Entry.query.all()
         else:
+            entry_id = int(entry_id)
+
             response = {"entries": validate_entity(
-                model=Entry, entityId=entryId)}
+                model=Entry, entityId=entry_id)}
 
             if response:
                 return parse_response(response, 400)
 
-            entries = Entry.query.get(entryId)
+            entries = Entry.query.get(entry_id)
 
         response = {"entries": [entry.to_json() for entry in entries]}
 
