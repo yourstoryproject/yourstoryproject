@@ -10,13 +10,14 @@
     "doc": "doc",
     "test": "tests"
   },
+  "homepage": "https://yourstoryproject.herokuapp.com",
   "scripts": {
-    "build": "ember build",
+    "build": "ember build --output-path=../pyapp/static/",
     "lint:hbs": "ember-template-lint .",
     "lint:js": "eslint .",
     "start": "ember serve",
     "test": "ember test",
-    "watch": "ember build --watch --output-path=../server/pyapp/static/"
+    "watch": "ember build --watch --output-path=../pyapp/static/"
   },
   "devDependencies": {
     "@ember/jquery": "^0.5.2",
@@ -40,6 +41,7 @@
     "ember-maybe-import-regenerator": "^0.1.6",
     "ember-qunit": "^3.4.1",
     "ember-resolver": "^5.0.1",
+    "ember-simple-auth": "^1.8.1",
     "ember-source": "~3.7.0",
     "ember-welcome-page": "^3.2.0",
     "eslint-plugin-ember": "^5.2.0",
