@@ -3,7 +3,9 @@ from flask import flash, redirect, render_template, request, send_from_directory
 from flask_cors import CORS
 from flask_login import current_user, login_required, login_user, logout_user
 from pyapp import login_manager, pyapp, db
+from pyapp.api.Account import create_account
 from pyapp.forms.LoginForm import LoginForm
+from pyapp.forms.RegisterForm import RegisterForm
 from pyapp.models.Account import Account as Account_Model
 from pyapp.routes import Account, Entry, Tag
 from pyapp.utils.auth import role_required
@@ -76,6 +78,24 @@ def login():
 
     return render_template('login.html', title='Sign In', form=form)
 
+
+@pyapp.route('/register', methods=['GET', 'POST'])
+def register():
+    if current_user.is_authenticated:
+        return redirect(url_for('index'))
+
+    form = RegisterForm()
+
+    if form.validate_on_submit():
+        account = Account_Model(email=form.email.data, password=form.password.data)
+
+        db.session.add(account)
+        db.session.commit()
+
+        flash('Congrats, you registered!')
+
+        return redirect(url_for('login'))
+    return render_template('register.html', title='Register', form=form)
 
 @pyapp.route('/logout', methods=['GET'])
 @login_required
