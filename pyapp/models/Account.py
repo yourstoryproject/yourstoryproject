@@ -28,7 +28,7 @@ class Account(db.Model):
     password_hash = db.Column(db.String(64), nullable=False)
     role = db.Column(db.String(64), default='user')
 
-    def __init__(self, email, password, confirmed, admin=False, confirmed_on=None):
+    def __init__(self, email, password, confirmed=False, admin=False, confirmed_on=None):
         """
         Class constructor
         """
