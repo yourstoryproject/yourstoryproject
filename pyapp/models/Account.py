@@ -7,7 +7,13 @@ class Account(db.Model):
     __tablename__ = 'account'
 
     id = db.Column(db.Integer, primary_key=True, nullable=False)
+    admin = db.Column(db.Boolean, default=False, nullable=False)
     authenticated = db.Column(db.Boolean, default=False)
+    confirmed = db.Column(db.Boolean, default=False)
+    confirmed_on = db.Column(
+        db.DateTime,
+        unique=False,
+        nullable=True)
     created_on = db.Column(
         db.DateTime,
         default=datetime.datetime.utcnow,
@@ -22,11 +28,14 @@ class Account(db.Model):
     password_hash = db.Column(db.String(64), nullable=False)
     role = db.Column(db.String(64), default='user')
 
-    def __init__(self, email, password):
+    def __init__(self, email, password, confirmed=False, admin=False, confirmed_on=None):
         """
         Class constructor
         """
+        self.admin = admin
         self.authenticated = False
+        self.confirmed = confirmed
+        self.confirmed_on = confirmed_on
         self.created_on = datetime.datetime.utcnow()
         self.email = email.lower()
         self.last_login = datetime.datetime.utcnow()
@@ -58,6 +67,8 @@ class Account(db.Model):
     def to_json(self):
         return {
             'id': self.id,
+            'confirmed': self.confirmed,
+            'confirmed_on': self.confirmed_on,
             'created_on': self.created_on,
             'email': self.email,
             'last_login': self.last_login,
