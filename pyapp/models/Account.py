@@ -1,4 +1,5 @@
 from pyapp import db
+from pyapp.utils.constants import roles
 from werkzeug import check_password_hash, generate_password_hash
 import datetime
 
@@ -7,7 +8,6 @@ class Account(db.Model):
     __tablename__ = 'account'
 
     id = db.Column(db.Integer, primary_key=True, nullable=False)
-    admin = db.Column(db.Boolean, default=False, nullable=False)
     authenticated = db.Column(db.Boolean, default=False)
     confirmed = db.Column(db.Boolean, default=False)
     confirmed_on = db.Column(
@@ -26,21 +26,20 @@ class Account(db.Model):
         unique=False,
         nullable=True)
     password_hash = db.Column(db.String(64), nullable=False)
-    role = db.Column(db.String(64), default='user')
+    role = db.Column(db.Integer, default=roles.USER, nullable=False)
 
-    def __init__(self, email, password, confirmed=False, admin=False, confirmed_on=None):
+    def __init__(self, email, password):
         """
         Class constructor
         """
-        self.admin = admin
         self.authenticated = False
-        self.confirmed = confirmed
-        self.confirmed_on = confirmed_on
+        self.confirmed = False
+        self.confirmed_on = None
         self.created_on = datetime.datetime.utcnow()
         self.email = email.lower()
         self.last_login = datetime.datetime.utcnow()
         self.set_password(password)
-        self.role = 'user'
+        self.role = roles.USER
 
     def set_password(self, password):
         self.password_hash = generate_password_hash(password, salt_length=8)
@@ -64,15 +63,17 @@ class Account(db.Model):
     def is_anonymous(self):
         return False
 
+    def set_role(self, role):
+        # Should validate that role is one of type
+        self.role = role
+
     def to_json(self):
         return {
             'id': self.id,
             'confirmed': self.confirmed,
             'confirmed_on': self.confirmed_on,
             'created_on': self.created_on,
-            'email': self.email,
             'last_login': self.last_login,
-            'role': self.role
         }
 
     def __repr__(self):

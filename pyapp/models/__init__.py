@@ -12,3 +12,13 @@ tags = db.Table(
         db.Integer,
         db.ForeignKey('entry.id'),
         primary_key=True))
+
+admins = db.Table(
+    'admins',
+    db.Column(
+        'account_id',
+        db.Integer,
+        db.ForeignKey('account.id'),
+        primary_key=True))
+
+    # Added admin tble, added account id for admin. how do i check if it matches?

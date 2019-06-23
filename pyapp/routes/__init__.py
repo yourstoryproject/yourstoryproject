@@ -9,6 +9,7 @@ from pyapp.forms.RegisterForm import RegisterForm
 from pyapp.models.Account import Account as Account_Model
 from pyapp.routes import Account, Entry, Tag
 from pyapp.utils.auth import role_required
+from pyapp.utils.constants import ROLES
 from werkzeug.urls import url_parse
 
 # Allow CORS so client can make requests to DB
@@ -47,7 +48,7 @@ def forward(path):
 
 @pyapp.route('/api/v1/')
 @login_required
-@role_required('admin')
+@role_required(ROLES.ADMIN)
 def api_route():
     return render_template('api.html', title='API Home')
 
