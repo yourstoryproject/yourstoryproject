@@ -20,5 +20,27 @@
     <script src="{{rootURL}}assets/client.js"></script>
 
     {{content-for "body-footer"}}
+
+    <!-- The core Firebase JS SDK is always required and must be listed first -->
+    <script src="https://www.gstatic.com/firebasejs/6.2.4/firebase-app.js"></script>
+
+    <!-- TODO: Add SDKs for Firebase products that you want to use
+         https://firebase.google.com/docs/web/setup#config-web-app -->
+
+    <script>
+      // Your web app's Firebase configuration
+      var firebaseConfig = {
+        apiKey: "AIzaSyBv-wmF3iz-PywbXdFVxLAZQO-OrKoJBKw",
+        authDomain: "yourstoryproject-f405e.firebaseapp.com",
+        databaseURL: "https://yourstoryproject-f405e.firebaseio.com",
+        projectId: "yourstoryproject-f405e",
+        storageBucket: "",
+        messagingSenderId: "322145757288",
+        appId: "1:322145757288:web:aa974a75b21038c3"
+      };
+      // Initialize Firebase
+      firebase.initializeApp(firebaseConfig);
+    </script>
+
   </body>
 </html>
